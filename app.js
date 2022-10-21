@@ -15,6 +15,18 @@ body: String
 
 const Article = mongoose.model('Article', wikiSchema);
 
+app.route('/article')
+.get(function(req, res){
+    Article.find(function(err, foundArticles){
+        if(!err){
+            res.send(foundArticles);
+        }else{
+                console.log(err);
+        }
+    });
+
+});
+
 
 
 
