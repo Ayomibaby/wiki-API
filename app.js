@@ -47,7 +47,7 @@ app.route('/article')
         if(err){
             console.log(err)
         }else{
-            res.send('sucessfuly deleted');
+            res.send('sucessfuly deleted articles');
         }
 
     });
@@ -64,8 +64,18 @@ app.route('/article/:articleTitle')
             res.send("cannot find article");
         }
     });
-});
+})
 
+.delete(function(req, res){
+    const parameter = req.params.articleTitle;
+    Article.deleteOne({parameter}, function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.send('successfully deleted article');
+        }
+    });
+});
 
 app.listen(3000, function(){
     console.log('listening on port 3000');
