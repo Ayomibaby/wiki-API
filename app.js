@@ -53,7 +53,18 @@ app.route('/article')
     });
 });
 
+app.route('/article/:articleTitle')
+.get(function(req, res){
+    const parameter = req.params.articleTitle;
 
+    Article.findOne({parameter}, function(err, foundArticle){
+        if(!err){
+            res.send(foundArticle);
+        }else{
+            res.send("cannot find article");
+        }
+    });
+});
 
 
 app.listen(3000, function(){
