@@ -75,6 +75,36 @@ app.route('/article/:articleTitle')
             res.send('successfully deleted article');
         }
     });
+})
+
+.put(function(req, res){
+    const parameter = req.params.articleTitle;
+
+    Article.updateOne(
+        {title:req.params.articleTitle},
+        {title: req.body.title,
+        body: req.body.body},
+        {upsert:true}, 
+        function(err){
+            if(!err){
+                res.send('updated article');
+            }else{
+                console.log(err)
+            }
+        });
+})
+
+.patch(function(req, res){
+    Article.updateOne(
+        {title:req.params.articleTitle},
+        {$set: req.body}, 
+        function(err){
+            if(!err){
+                res.send('successfully updated article')
+            }else{
+                console.log(err)
+            }
+        });
 });
 
 app.listen(3000, function(){
