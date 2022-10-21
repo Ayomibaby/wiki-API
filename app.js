@@ -6,15 +6,19 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//connect mongodb
 mongoose.connect('mongodb://localhost:27017/wikiDB');
 
+//mongoose schema
 const wikiSchema = new mongoose.Schema({
 title: String, 
 body: String
 });
 
+//model
 const Article = mongoose.model('Article', wikiSchema);
 
+//get all articles
 app.route('/article')
 .get(function(req, res){
     Article.find(function(err, foundArticles){
@@ -27,6 +31,7 @@ app.route('/article')
 
 })
 
+//add new article
 .post(function(req, res){
    const newArticle = new Article({
     title: req.body.title,
@@ -42,6 +47,7 @@ app.route('/article')
    });
 })
 
+//delete all articles
 .delete(function(req, res){
     Article.deleteMany(function(err){
         if(err){
@@ -53,6 +59,7 @@ app.route('/article')
     });
 });
 
+//get one article
 app.route('/article/:articleTitle')
 .get(function(req, res){
     const parameter = req.params.articleTitle;
@@ -66,6 +73,7 @@ app.route('/article/:articleTitle')
     });
 })
 
+//delete one article
 .delete(function(req, res){
     const parameter = req.params.articleTitle;
     Article.deleteOne({parameter}, function(err){
@@ -77,6 +85,7 @@ app.route('/article/:articleTitle')
     });
 })
 
+//edit one article 
 .put(function(req, res){
     const parameter = req.params.articleTitle;
 
@@ -94,6 +103,7 @@ app.route('/article/:articleTitle')
         });
 })
 
+//edit one article
 .patch(function(req, res){
     Article.updateOne(
         {title:req.params.articleTitle},
