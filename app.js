@@ -40,6 +40,17 @@ app.route('/article')
         console.log(err);
     }
    });
+})
+
+.delete(function(req, res){
+    Article.deleteMany(function(err){
+        if(err){
+            console.log(err)
+        }else{
+            res.send('sucessfuly deleted');
+        }
+
+    });
 });
 
 
