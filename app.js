@@ -25,6 +25,21 @@ app.route('/article')
         }
     });
 
+})
+
+.post(function(req, res){
+   const newArticle = new Article({
+    title: req.body.title,
+    body: req.body.body
+   });
+    
+   newArticle.save(function(err, newArticle){
+    if(!err){
+        res.send('Article has been succesfully added')
+    }else{
+        console.log(err);
+    }
+   });
 });
 
 
